@@ -9,13 +9,25 @@ import Login from "./components/auth/Login";
 import { Provider } from "react-redux";
 import store from "./store";
 import Alert from "./components/layout/Alert.js";
+import { loadUser } from "./actions/auth";
+import { useEffect } from "react";
+import setAuthToken from "./utils/setAuthToken";
+if (localStorage.token) {
+  setAuthToken(localStorage.token)
+}
+
 function App() {
+
+
+  useEffect(() => {
+    store.dispatch(loadUser);
+  }, [])
   return (
     <Provider store={store}>
       <Router>
         <Navbar />
         <main className="container">
-          <Alert/>
+          <Alert />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/register" element={<Register />} />
